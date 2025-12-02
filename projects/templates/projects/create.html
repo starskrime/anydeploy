@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-12">
+    <h1 class="text-2xl font-bold mb-6">Deploy New Project</h1>
+    <form method="post" enctype="multipart/form-data" class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-400 mb-2">Project Name</label>
+            <input type="text" name="name" required
+                class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 text-white focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-400 mb-2">Description</label>
+            <textarea name="description" rows="3"
+                class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2.5 text-white focus:ring-blue-500 focus:border-blue-500"></textarea>
+        </div>
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-400 mb-2">Source Code (Zip)</label>
+            <input type="file" name="file" accept=".zip" required
+                class="w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-700 file:text-white hover:file:bg-gray-600">
+        </div>
+        <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">Deploy
+            Project</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+    {% for project in projects %}
+    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-gray-600 transition-colors">
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-semibold">{{ project.name }}</h3>
+            <span class="px-2 py-1 rounded text-xs font-medium 
+                {% if project.status == 'running' %}bg-green-900 text-green-300
+                {% elif project.status == 'failed' %}bg-red-900 text-red-300
+                {% elif project.status == 'building' %}bg-yellow-900 text-yellow-300
+                {% else %}bg-gray-700 text-gray-300{% endif %}">
+                {{ project.status }}
+            </span>
+        </div>
+        <p class="text-gray-400 text-sm mb-4">{{ project.description|truncatechars:100 }}</p>
+        <div class="flex justify-between items-center text-sm text-gray-500">
+            <span>{{ project.created_at|date:"M d, Y" }}</span>
+            {% if project.port %}
+            <a href="http://localhost:{{ project.port }}" target="_blank" class="text-blue-400 hover:underline">Open App
+                &rarr;</a>
+            {% endif %}
+            <a href="{% url 'project_logs' project.project_id %}"
+                class="text-gray-400 hover:text-white hover:underline">Logs</a>
+            <form method="post" action="{% url 'delete_project' project.project_id %}"
+                onsubmit="return confirm('Are you sure?');">
+                {% csrf_token %}
+                <button type="submit" class="text-red-400 hover:text-red-300 hover:underline">Delete</button>
+            </form>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full text-center py-12 text-gray-500">
+        <p>No projects yet. Click "New Project" to get started.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Logs: {{ project.name }}</h1>
+        <a href="{% url 'index' %}" class="text-gray-400 hover:text-white">&larr; Back to Dashboard</a>
+    </div>
+
+    <div class="bg-black rounded-xl border border-gray-800 p-4 font-mono text-sm overflow-x-auto">
+        <pre class="whitespace-pre-wrap text-green-400">{{ project.logs|default:"No logs available." }}</pre>
+    </div>
+</div>
+{% endblock %}
